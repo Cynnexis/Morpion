@@ -29,7 +29,10 @@ public class Matrix<T> {
 		{
 			matrix.add(new ArrayList<>(nbRows));
 			for (int j = 0; j < nbColumns; j++)
+			{
 				matrix.get(i).add(defaultValue);
+				listener.OnCellChanged(i, j, defaultValue);
+			}
 		}
 	}
 	

@@ -11,6 +11,16 @@ public class Player {
 	private ECell type = ECell.CROSS;
 	private int nbWin = 0;
 	private int nbGame = 0;
+	private PlayerListener playerListener = new PlayerListener() {
+		@Override
+		public void onNameChanged(String name) { }
+		@Override
+		public void onTypeChanged(ECell type) { }
+		@Override
+		public void onNbWinChanged(int nbWin) { }
+		@Override
+		public void onNbGameChanged(int nbGame) { }
+	};
 	
 	public Player(String name, ECell type) {
 		setName(name);
@@ -49,11 +59,12 @@ public class Player {
 	}
 	
 	public void incrementNbGame() {
-		nbGame++;
+		setNbGame(getNbGame() + 1);
 	}
 	
 	public void incrementNbGameAndNbWin() {
-		nbWin++;
+		setNbWin(getNbWin() + 1);
+		setNbGame(getNbGame() + 1);
 	}
 	
 	/* GETTERS & SETTERS */
@@ -63,7 +74,10 @@ public class Player {
 	}
 	
 	public void setName(String name) {
-		this.name = name;
+		if (name != null && !name.isEmpty()) {
+			this.name = name;
+			playerListener.onNameChanged(name);
+		}
 	}
 	
 	public ECell getType() {
@@ -71,8 +85,10 @@ public class Player {
 	}
 	
 	public void setType(ECell type) {
-		if (type != null && type != ECell.EMPTY)
+		if (type != null && type != ECell.EMPTY) {
 			this.type = type;
+			playerListener.onTypeChanged(type);
+		}
 	}
 	
 	public int getNbWin() {
@@ -80,8 +96,10 @@ public class Player {
 	}
 	
 	public void setNbWin(int nbWin) {
-		if (nbGame >= 0)
+		if (nbWin >= 0) {
 			this.nbWin = nbWin;
+			playerListener.onNbWinChanged(nbWin);
+		}
 	}
 	
 	public int getNbGame() {
@@ -89,8 +107,27 @@ public class Player {
 	}
 	
 	public void setNbGame(int nbGame) {
-		if (nbGame >= 0)
+		if (nbGame >= 0) {
 			this.nbGame = nbGame;
+			playerListener.onNbGameChanged(nbGame);
+		}
+	}
+	
+	public PlayerListener getPlayerListener() {
+		return playerListener;
+	}
+	
+	public void setPlayerListener(PlayerListener playerListener) {
+		this.playerListener = playerListener != null ? playerListener : new PlayerListener() {
+			@Override
+			public void onNameChanged(String name) { }
+			@Override
+			public void onTypeChanged(ECell type) { }
+			@Override
+			public void onNbWinChanged(int nbWin) { }
+			@Override
+			public void onNbGameChanged(int nbGame) { }
+		};
 	}
 	
 	/* OVERRIDES */
