@@ -1,19 +1,45 @@
 package fr.polytech.tp3.morpion.game;
 
+import com.sun.istack.internal.NotNull;
 import fr.polytech.tp3.morpion.game.exceptions.CellFullException;
 import fr.polytech.tp3.morpion.game.matrix.Point;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Scanner;
-
+/**
+ * The Tic Tac Toe game engine
+ * @author Valentin Berger
+ */
 public class Game {
 	
+	/**
+	 * The player 1
+	 */
 	private Player p1;
+	/**
+	 * The player 2
+	 */
 	private Player p2;
+	/**
+	 * The current token. It shows which player has the turn to play. If player 1 is playing, the token is
+	 * {@code ECell.CROSS}, and if it is player 2, the token is {@code ECell.CIRCLE}
+	 */
 	private ECell token;
+	/**
+	 * The Tic Tac Toe grid
+	 */
 	private Grid grid;
+	/**
+	 * The current state of the game. At the beginning, it is {@code EState.INITIALIZING}
+	 */
 	private EState state = EState.INITIALIZING;
+	/**
+	 * The number of games the players play from the beginning of the program
+	 */
 	private int nbGame = 0;
+	/**
+	 * The listener of the game. It cannot be null
+	 */
+	@NotNull
 	private GameListener listener = new GameListener() {
 		@Override
 		public void onStateChanged(EState oldState, EState newState) { }
@@ -23,13 +49,26 @@ public class Game {
 		public void onNbGameChanged(int nbGame) { }
 	};
 	
+	/**
+	 * Initialize a game with the name of the player
+	 * @param p1Name The name of player 1
+	 * @param p2Name The name of player 2
+	 */
 	public Game(String p1Name, String p2Name) {
 		init(p1Name, p2Name);
 	}
+	/**
+	 * Initialize a game with and give to player 1 the name "p1", and to player 2 "p2"
+	 */
 	public Game() {
 		init("p1", "p2");
 	}
 	
+	/**
+	 * Initialize the game
+	 * @param p1Name The name of player 1
+	 * @param p2Name The name of player 2
+	 */
 	private void init(String p1Name, String p2Name) {
 		p1 = new Player(ECell.CROSS);
 		p1.setName(p1Name);
@@ -41,51 +80,19 @@ public class Game {
 		grid = new Grid(3, 3);
 	}
 	
-	@Deprecated
-	public void play() {
-		grid.clear();
-		setState(EState.PLAYING);
-		
-		while (getState() == EState.PLAYING) {
-			playOneTurn();
-		}
-		
-		Player winner;
-		switch (getState())
-		{
-			case P1WON:
-				p1.incrementNbGameAndNbWin();
-				p2.incrementNbGame();
-				winner = p1;
-				break;
-			case P2WON:
-				p2.incrementNbGameAndNbWin();
-				p1.incrementNbGame();
-				winner = p2;
-				break;
-			default:
-				p1.incrementNbGame();
-				p2.incrementNbGame();
-				winner = null;
-				break;
-		}
-		
-		setNbGame(getNbGame() + 1);
-		
-		// The token is given to the looser (if exists), otherwise it is p1
-		if (state != EState.DRAW)
-		{
-			if (state == EState.P1WON)
-				setToken(p2.getType());
-			else
-				setToken(p1.getType());
-		}
-		else
-			setToken(p1.getType());
-		
-		setState(EState.PLAYING);
-	}
-	
+	/**
+	 * <p>
+	 * If the state of the game is {@code EState.PLAYING}, then this method will make the player chosen by the
+	 * {@code token} play. It will fill the cell of coordinates {@code coordinates} in the grid {@code grid} with the
+	 * player's type if the rules are respected. Then, the procedure checks if there is a winner by using the
+	 * {@code checkWin} method. In the case there is a winner, the game state turns into {@code EState.P1WON} or
+	 *  {@code EState.P2WON}, the number of victory of the winner and the number of game is incremented by 1
+	 * </p>
+	 * @param coordinates The coordinates
+	 * @throws CellFullException Throw if the cell of coordinates {@code coordinates} is already full
+	 * @see Player
+	 * @see CellFullException
+	 */
 	public void play(Point coordinates) throws CellFullException {
 		if (getState() == EState.PLAYING) {
 			// The current player is placed in the variable p.
@@ -120,96 +127,61 @@ public class Game {
 				case EMPTY:
 					// If checkWin() returns 'EMPTY' and the grid is full, it is a draw:
 					if (grid.isFull()) {
-						p1.incrementNbGame();
-						p2.incrementNbGame();
 						setNbGame(getNbGame() + 1);
 						setState(EState.DRAW);
 					}
 					// Otherwise, the game continues (state = PLAYING)
 					break;
 				case CROSS:
-					p1.incrementNbGameAndNbWin();
-					p2.incrementNbGame();
+					p1.incrementNbWin();
 					setNbGame(getNbGame() + 1);
 					setState(EState.P1WON);
 					break;
 				case CIRCLE:
-					p2.incrementNbGameAndNbWin();
-					p1.incrementNbGame();
+					p2.incrementNbWin();
 					setNbGame(getNbGame() + 1);
 					setState(EState.P2WON);
 					break;
 			}
 		}
 	}
+	/**
+	 * <p>
+	 * If the state of the game is {@code EState.PLAYING}, then this method will make the player chosen by the
+	 * {@code token} play. It will fill the cell of coordinates ({@code x} ; {@code y}) in the grid {@code grid} with the
+	 * player's type if the rules are respected. Then, the procedure checks if there is a winner by using the
+	 * {@code checkWin} method. In the case there is a winner, the game state turns into {@code EState.P1WON} or
+	 * {@code EState.P2WON}, the number of victory of the winner and the number of game is incremented by 1
+	 * </p>
+	 * @param x The column index
+	 * @param y The column index
+	 * @throws CellFullException Throw if the cell of coordinates ({@code x} ; {@code y}) is already full
+	 * @see Player
+	 * @see CellFullException
+	 */
 	public void play(int x, int y) throws CellFullException {
 		play(new Point(x, y));
 	}
 	
+	/**
+	 * Clear the grid and set the game state to {@code EState.PLAYING}
+	 */
 	public void newGame() {
 		grid.clear();
 		setState(EState.PLAYING);
 	}
 	
-	@Deprecated
-	private void playOneTurn() {
-		Point coordinates = new Point();
-		boolean error = false;
-		
-		System.out.println(grid.toString());
-		
-		if (getState() == EState.PLAYING) {
-			// The current player is placed in the variable p.
-			/* Note: if p changes (ex: `p.setName("test")`), then the associated player (p1 ou p2) changes too because
-			   the instantiation in Java transfer the pointer to the object in the memory (even if the notion of pointer
-			   does not exist in Java). Then, p is like a pointer to p1 or p2 according to the value of the token. */
-			Player p = token == ECell.CROSS ? p1 : p2;
-			
-			do {
-				coordinates = p.play(grid.getNbColumns(), grid.getNbRows());
-				error = grid.get(coordinates) != ECell.EMPTY;
-				if (error)
-					System.out.println("The point (" + (coordinates.getX() + 1) + ", " + (coordinates.getY() + 1) + ") is already filled. Try again.");
-			} while (grid.get(coordinates) != ECell.EMPTY);
-			
-			try {
-				if (grid.get(coordinates) == ECell.EMPTY)
-					grid.set(coordinates, token);
-			} catch (ArrayIndexOutOfBoundsException ex) {
-				ex.printStackTrace();
-				System.exit(-1);
-			}
-			
-			// Inverting the token:
-			setToken(token == ECell.CROSS ? ECell.CIRCLE : ECell.CROSS);
-			
-			// Check if someone won:
-			ECell result;
-			result = checkWin();
-			switch (result)
-			{
-				case EMPTY:
-					// If checkWin() returns 'EMPTY' and the grid is full, it is a draw:
-					if (grid.isFull())
-						setState(EState.DRAW);
-					// Otherwise, the game continue (state = PLAYING)
-					break;
-				case CROSS:
-					state = EState.P1WON;
-					break;
-				case CIRCLE:
-					state = EState.P2WON;
-					break;
-			}
-		}
-	}
-	
 	/**
+	 * <p>
+	 * Check if one of the two players won. To do so, the method checks the pattern of each token in the grid
+	 * </p>
+	 * <p>
 	 * The method cannot check a m*n grid. See https://en.wikipedia.org/wiki/M,n,k-game
+	 * </p>
 	 * @return Return `CROSS` if the player associated to the cross won, `CIRCLE` if the player associated to the circle
 	 * won, or `EMPTY` if nothing happen (it can be a draw, so it is advise to check if the grid is full after calling
 	 * this method).
-	 * @throws NotImplementedException
+	 * @throws NotImplementedException Throw an exception if the grid is not a 3-by-3 grid
 	 */
 	private ECell checkWin() throws NotImplementedException {
 		if (grid.getNbColumns() != 3 || grid.getNbRows() != 3)
@@ -241,7 +213,7 @@ public class Game {
 	
 	/**
 	 * Returns the player who is playing, according to the token.
-	 * @return Return the player `p1`, `p2` or `null` if the game is stopped.
+	 * @return Return the player {@code p1}, {@code p2} or {@code null} if the game is stopped.
 	 */
 	public Player getCurrentPlayer() {
 		switch (token)

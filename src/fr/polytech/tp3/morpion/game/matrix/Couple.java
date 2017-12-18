@@ -2,15 +2,30 @@ package fr.polytech.tp3.morpion.game.matrix;
 
 import java.util.Objects;
 
+/**
+ * Couple class. It contains two data {@code x} and {@code y}
+ * @author Valentin Berger
+ * @param <T> The type of {@code x}
+ * @param <U> The type of {@code y}
+ * @see Point
+ */
 public class Couple<T, U> {
 	
 	private T x;
 	private U y;
 	
+	/**
+	 * Default constructor. Set {@code x} and {@code y} with {@code null}
+	 */
 	public Couple() {
 		x = null;
 		y = null;
 	}
+	/**
+	 * Set {@code x} and {@code y} with the given value
+	 * @param x The value of x
+	 * @param y The value of y
+	 */
 	public Couple(T x, U y) {
 		setX(x);
 		setY(y);

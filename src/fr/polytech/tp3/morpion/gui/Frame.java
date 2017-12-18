@@ -5,15 +5,37 @@ import fr.polytech.tp3.morpion.game.exceptions.CellFullException;
 import fr.polytech.tp3.morpion.game.matrix.Matrix;
 import fr.polytech.tp3.morpion.game.matrix.MatrixListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
+/**
+ * The main window of the application. It uses the Singleton Design Pattern
+ * @author Valentin Berger
+ * @see Matrix
+ * @see ArrangedButton
+ */
 public class Frame extends JFrame {
 	
+	/**
+	 * The unique instance of Frame
+	 */
+	private static Frame frame = new Frame();
+	
+	/**
+	 * The game
+	 */
 	private Game game = new Game();
+	/**
+	 * The matrix which will contain all the ArrangedButtons to create a visual grid
+	 * @see Matrix
+	 * @see ArrangedButton
+	 */
 	private Matrix<ArrangedButton> buttons = new Matrix<>(game.getGrid().getNbColumns(), game.getGrid().getNbRows(), new ArrangedButton());
 	
 	private JMenuBar menuBar = new JMenuBar();
@@ -34,9 +56,22 @@ public class Frame extends JFrame {
 	private JLabel l_p2token = new JLabel();
 	private JLabel l_nbGame = new JLabel("0");
 	
+	/**
+	 * The string which player must play. The substring "%s" must be replaced by the player's name by using
+	 * {@code String.format()}
+	 * @see String
+	 */
 	private final String tokenString = "%s, it\'s your turn!";
 	
-	public Frame() {
+	/**
+	 * The private constructor of Frame. It initialize the game and all the components
+	 * @see Game
+	 * @see GameListener
+	 * @see Player
+	 * @see PlayerListener
+	 */
+	private Frame() {
+		// Init the game listener
 		game.setListener(new GameListener() {
 			@Override
 			public void onStateChanged(EState oldState, EState newState) {
@@ -65,8 +100,10 @@ public class Frame extends JFrame {
 				switch (newToken)
 				{
 					case EMPTY:
-						// If it empty, the program chooses the player.
+						// If it empty, the program chooses the player 1.
 						game.setToken(ECell.CROSS);
+						/* No break here, because the following code must be execute in order to have player 1 as
+						   the beginner of the game */
 					case CROSS:
 						l_p1token.setText(String.format(tokenString, game.getP1().getName()));
 						l_p2token.setText("");
@@ -88,6 +125,7 @@ public class Frame extends JFrame {
 			@Override
 			public void OnCellChanged(int x, int y, Object value) {
 				try {
+					// If a cell changed, the program changes the associated button text
 					if (buttons.get(x, y) != null)
 						buttons.get(x, y).setText(ECell.class.cast(value).toString());
 				} catch (ClassCastException ex) {
@@ -103,11 +141,8 @@ public class Frame extends JFrame {
 			public void onTypeChanged(ECell type) { }
 			@Override
 			public void onNbWinChanged(int nbWin) {
-				System.out.println("P1> nbWin = " + nbWin);
 				l_p1nbWin.setText(Integer.toString(nbWin));
 			}
-			@Override
-			public void onNbGameChanged(int nbGame) { }
 		});
 		
 		game.getP2().setPlayerListener(new PlayerListener() {
@@ -117,13 +152,11 @@ public class Frame extends JFrame {
 			public void onTypeChanged(ECell type) { }
 			@Override
 			public void onNbWinChanged(int nbWin) {
-				System.out.println("P2> nbWin = " + nbWin);
 				l_p2nbWin.setText(Integer.toString(nbWin));
 			}
-			@Override
-			public void onNbGameChanged(int nbGame) { }
 		});
 		
+		/* Configuring components */
 		p_buttons.setLayout(new GridLayout(game.getGrid().getNbColumns(), game.getGrid().getNbRows(), 5, 5));
 		
 		for (int i = 0, imax = game.getGrid().getNbColumns(); i < imax; i++)
@@ -143,10 +176,15 @@ public class Frame extends JFrame {
 			}
 		}
 		
+		mi_exit.addActionListener((ActionEvent e) -> {
+			Frame.this.dispose();
+		});
+		
 		m_file.add(mi_exit);
 		
 		menuBar.add(m_file);
 		
+		// Change dynamically the name of the player
 		tf_p1name.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
@@ -214,7 +252,15 @@ public class Frame extends JFrame {
 		// Setting up the initial conditions:
 		game.getListener().onTokenChanged(game.getToken(), game.getToken());
 		game.newGame();
-		
+	}
+	
+	/**
+	 * Display the frame
+	 * @see UIManager
+	 * @see SwingUtilities
+	 * @see JFrame
+	 */
+	public void display() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -227,17 +273,37 @@ public class Frame extends JFrame {
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setJMenuBar(menuBar);
 		this.getContentPane().add(sp_main, BorderLayout.CENTER);
+		try {
+			this.setIconImage(ImageIO.read(getClass().getResourceAsStream("/Images/Icon64.png")));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		
 		SwingUtilities.updateComponentTreeUI(this);
 		
 		this.setVisible(true);
 	}
 	
+	/**
+	 * The the unique instance of Frame
+	 * @return The instance of Frame
+	 */
+	public static Frame getInstance() {
+		return frame;
+	}
+	
+	/**
+	 * Win code
+	 * @param p The winner
+	 */
 	private void win(Player p) {
 		JOptionPane.showMessageDialog(this, "Congratulation " + p.getName() + "!", "Congratualtion", JOptionPane.PLAIN_MESSAGE);
 		game.newGame();
 	}
 	
+	/**
+	 * Draw code
+	 */
 	private void draw() {
 		JOptionPane.showMessageDialog(this, "Draw!", "Draw", JOptionPane.PLAIN_MESSAGE);
 		game.newGame();

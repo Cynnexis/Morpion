@@ -1,12 +1,24 @@
 package fr.polytech.tp3.morpion.game.matrix;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
 
+/**
+ * The matrix class is a sort or 2-dimensional ArrayList. It can contains a table of m*n elements by using an
+ * ArrayList&lt;ArrayList&lt;T&gt;&gt;
+ * @author Valentin Berger
+ * @param <T> The type of data
+ */
 public class Matrix<T> {
 	
 	private ArrayList<ArrayList<T>> matrix = null;
 	private int nbColumns = 0;
 	private int nbRows = 0;
+	/**
+	 * The listener of the matrix. It cannot be null.
+	 */
+	@NotNull
 	private MatrixListener<T> listener = (x, y, value) -> { };
 	
 	public Matrix(int nbColumns, int nbRows, T defaultValue) {
@@ -19,6 +31,12 @@ public class Matrix<T> {
 		init(0, 0, null);
 	}
 	
+	/**
+	 * Initialize the attributes and the matrix
+	 * @param nbColumns The number of columns of the matrix
+	 * @param nbRows The number of rows of the matrix
+	 * @param defaultValue The default value to put in every cell of the matrix
+	 */
 	protected void init(int nbColumns, int nbRows, T defaultValue) {
 		setNbColumns(nbColumns);
 		setNbRows(nbRows);
@@ -36,6 +54,12 @@ public class Matrix<T> {
 		}
 	}
 	
+	/**
+	 * Get the element of the matrix contains in the cell ({@code x} ; {@code y})
+	 * @param x The column index
+	 * @param y The row index
+	 * @return The element. If the coordinates are out of the grid, the result is {@code null}
+	 */
 	public T get(int x, int y) {
 		T result = null;
 		try {
@@ -47,10 +71,22 @@ public class Matrix<T> {
 		
 		return result;
 	}
+	/**
+	 * Get the element of the matrix contains in the cell ({@code point.x} ; {@code point.y})
+	 * @param point The coordinates of the cell to fetch
+	 * @return The element. If the coordinates are out of the grid, the result is {@code null}
+	 */
 	public T get(Point point) {
 		return get(point.getX(), point.getY());
 	}
 	
+	/**
+	 * Set the value of the cell ({@code x} ; {@code y}) to {@code value}
+	 * @param x The column index
+	 * @param y The row index
+	 * @param value The new value
+	 * @return Return {@code true} if the method sets the cell to {@code value}, otherwise {@code false}
+	 */
 	public boolean set(int x, int y, T value) {
 		boolean success = true;
 		
@@ -64,38 +100,35 @@ public class Matrix<T> {
 		
 		return success;
 	}
-	public boolean set(T value, int x, int y) {
-		return set(x, y, value);
-	}
+	/**
+	 * Set the value of the cell ({@code point.x} ; {@code point.y}) to {@code value}
+	 * @param point The coordinates of the cell to fetch
+	 * @param value The new value
+	 * @return Return {@code true} if the method sets the cell to {@code value}, otherwise {@code false}
+	 */
 	public boolean set(Point point, T value) {
 		return set(point.getX(), point.getY(), value);
 	}
-	public boolean set(T value, Point point) {
-		return set(value, point.getX(), point.getY());
-	}
 	
-	public T remove(int x, int y) {
-		T result = null;
-		try {
-			result = matrix.get(x).remove(y);
-		} catch (ArrayIndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-			result = null;
-		}
-		
-		return result;
-	}
-	public T remove(Point point) {
-		return remove(point.getX(), point.getY());
-	}
-	
+	/**
+	 * Clear the matrix by setting all cells to {@code defaultValue}
+	 * @param defaultValue The value to apply to all cells
+	 */
 	public void clear(T defaultValue) {
 		init(getNbColumns(), getNbRows(), defaultValue);
 	}
+	/**
+	 * Clear the matrix by setting all cells to {@code null}
+	 */
 	public void clear() {
 		clear(null);
 	}
 	
+	/**
+	 * Search if the matrix contains {@code object}
+	 * @param object The object to search in the matrix
+	 * @return Return {@code true} if {@code object} is in the matrix, otherwise {@code false}
+	 */
 	public boolean contains(T object) {
 		boolean found = false;
 		
@@ -110,6 +143,11 @@ public class Matrix<T> {
 		return found;
 	}
 	
+	/**
+	 * Return the size of the matrix
+	 * @return Return a point such that the coordinate {@code x} is the number of columns, and {@code y} the number of
+	 * rows.
+	 */
 	public Point size() {
 		return new Point(getNbColumns(), getNbRows());
 	}

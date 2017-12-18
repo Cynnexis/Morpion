@@ -2,10 +2,16 @@ package fr.polytech.tp3.morpion.gui;
 
 import fr.polytech.tp3.morpion.game.matrix.Point;
 
-import javax.swing.*;
+import javax.swing.JButton;
 
+/**
+ * Button which extends from javax.swing.JButton, and as extra feature the attribute `coordinates`. The ArrangedButton
+ * is mostly used in visual grid.
+ */
 public class ArrangedButton extends JButton {
-	
+	/**
+	 * The coordinates of the button in the grid (which is the parent-component)
+	 */
 	private Point coordinates = new Point();
 	
 	public ArrangedButton() {
