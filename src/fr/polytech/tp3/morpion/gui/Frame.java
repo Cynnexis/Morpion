@@ -1,6 +1,7 @@
 package fr.polytech.tp3.morpion.gui;
 
 import fr.polytech.tp3.morpion.game.*;
+import fr.polytech.tp3.morpion.game.ai.Intelligence;
 import fr.polytech.tp3.morpion.game.exceptions.CellFullException;
 import fr.polytech.tp3.morpion.game.matrix.Matrix;
 import fr.polytech.tp3.morpion.game.matrix.MatrixListener;
@@ -40,6 +41,12 @@ public class Frame extends JFrame {
 	
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu m_file = new JMenu(System.getProperty("program.name"));
+	private JMenuItem mi_newGame = new JMenuItem("New game");
+	private JCheckBoxMenuItem mi_playAgainstKartona = new JCheckBoxMenuItem("Play against Kartona");
+	private JMenu m_kartonaDifficulty = new JMenu("Kartona Difficulty");
+	private ButtonGroup bg_kartonaDifficulty = new ButtonGroup();
+	private JRadioButtonMenuItem mi_kartonaEasy = new JRadioButtonMenuItem("Easy");
+	private JRadioButtonMenuItem mi_kartonaHard = new JRadioButtonMenuItem("Hard");
 	private JMenuItem mi_exit = new JMenuItem("Exit");
 	
 	private JSplitPane sp_main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -82,6 +89,8 @@ public class Frame extends JFrame {
 					case PLAYING:
 						break;
 					case PAUSING:
+						break;
+					case AIPLAYING:
 						break;
 					case P1WON:
 						win(game.getP1());
@@ -176,10 +185,43 @@ public class Frame extends JFrame {
 			}
 		}
 		
+		mi_newGame.addActionListener((ActionEvent e) -> {
+			if (game != null) {
+				game.newGame();
+				game.setToken(ECell.CROSS);
+			}
+		});
+		
+		mi_playAgainstKartona.addActionListener((ActionEvent e) -> {
+			if (game != null) {
+				game.setUseKartona(mi_playAgainstKartona.getState());
+			}
+		});
+		
+		mi_kartonaEasy.addActionListener((ActionEvent e) -> {
+			if (game != null)
+				game.getKartona().setIntelligence(Intelligence.EASY);
+		});
+		
+		mi_kartonaHard.addActionListener((ActionEvent e) -> {
+			if (game != null)
+				game.getKartona().setIntelligence(Intelligence.HARD);
+		});
+		
 		mi_exit.addActionListener((ActionEvent e) -> {
 			Frame.this.dispose();
 		});
 		
+		bg_kartonaDifficulty.add(mi_kartonaEasy);
+		bg_kartonaDifficulty.add(mi_kartonaHard);
+		mi_kartonaHard.setSelected(true);
+		
+		m_kartonaDifficulty.add(mi_kartonaEasy);
+		m_kartonaDifficulty.add(mi_kartonaHard);
+		
+		m_file.add(mi_newGame);
+		m_file.add(mi_playAgainstKartona);
+		m_file.add(m_kartonaDifficulty);
 		m_file.add(mi_exit);
 		
 		menuBar.add(m_file);

@@ -1,13 +1,18 @@
 package fr.polytech.tp3.morpion.game;
 
 import com.sun.istack.internal.NotNull;
+import fr.polytech.tp3.morpion.game.ai.Intelligence;
+import fr.polytech.tp3.morpion.game.ai.Kartona;
 import fr.polytech.tp3.morpion.game.exceptions.CellFullException;
+import fr.polytech.tp3.morpion.game.exceptions.GridFullException;
 import fr.polytech.tp3.morpion.game.matrix.Point;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * The Tic Tac Toe game engine
  * @author Valentin Berger
+ * @see EState
+ * @see Kartona
  */
 public class Game {
 	
@@ -24,6 +29,14 @@ public class Game {
 	 * {@code ECell.CROSS}, and if it is player 2, the token is {@code ECell.CIRCLE}
 	 */
 	private ECell token;
+	/**
+	 * The variable tells if Kartona must be used as player 2 instead of a real player
+	 */
+	private boolean useKartona = false;
+	/**
+	 * The kartona instance
+	 */
+	private Kartona kartona = new Kartona(Intelligence.HARD);
 	/**
 	 * The Tic Tac Toe grid
 	 */
@@ -94,6 +107,37 @@ public class Game {
 	 * @see CellFullException
 	 */
 	public void play(Point coordinates) throws CellFullException {
+		playOneRound(coordinates);
+		
+		// If Kartona must be used as player 2 and the game is still in PLAYING mode, then it's Kartona's turn
+		if (useKartona && token == ECell.CIRCLE && getState() == EState.PLAYING)
+		{
+			try {
+				playOneRound(kartona.thinkAboutMove(getGrid()));
+			} catch (GridFullException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * <p>
+	 * If the state of the game is {@code EState.PLAYING}, then this method will make the player chosen by the
+	 * {@code token} play. It will fill the cell of coordinates ({@code x} ; {@code y}) in the grid {@code grid} with the
+	 * player's type if the rules are respected. Then, the procedure checks if there is a winner by using the
+	 * {@code checkWin} method. In the case there is a winner, the game state turns into {@code EState.P1WON} or
+	 * {@code EState.P2WON}, the number of victory of the winner and the number of game is incremented by 1
+	 * </p>
+	 * @param x The column index
+	 * @param y The column index
+	 * @throws CellFullException Throw if the cell of coordinates ({@code x} ; {@code y}) is already full
+	 * @see Player
+	 * @see CellFullException
+	 */
+	public void play(int x, int y) throws CellFullException {
+		play(new Point(x, y));
+	}
+	
+	private void playOneRound(Point coordinates) throws CellFullException {
 		if (getState() == EState.PLAYING) {
 			// The current player is placed in the variable p.
 			/* Note: if p changes (ex: `p.setName("test")`), then the associated player (p1 ou p2) changes too because
@@ -144,23 +188,6 @@ public class Game {
 					break;
 			}
 		}
-	}
-	/**
-	 * <p>
-	 * If the state of the game is {@code EState.PLAYING}, then this method will make the player chosen by the
-	 * {@code token} play. It will fill the cell of coordinates ({@code x} ; {@code y}) in the grid {@code grid} with the
-	 * player's type if the rules are respected. Then, the procedure checks if there is a winner by using the
-	 * {@code checkWin} method. In the case there is a winner, the game state turns into {@code EState.P1WON} or
-	 * {@code EState.P2WON}, the number of victory of the winner and the number of game is incremented by 1
-	 * </p>
-	 * @param x The column index
-	 * @param y The column index
-	 * @throws CellFullException Throw if the cell of coordinates ({@code x} ; {@code y}) is already full
-	 * @see Player
-	 * @see CellFullException
-	 */
-	public void play(int x, int y) throws CellFullException {
-		play(new Point(x, y));
 	}
 	
 	/**
@@ -253,6 +280,22 @@ public class Game {
 		ECell old = this.token;
 		this.token = token;
 		listener.onTokenChanged(old, token);
+	}
+	
+	public boolean isUseKartona() {
+		return useKartona;
+	}
+	
+	public void setUseKartona(boolean useKartona) {
+		this.useKartona = useKartona;
+	}
+	
+	public Kartona getKartona() {
+		return kartona;
+	}
+	
+	public void setKartona(Kartona kartona) {
+		this.kartona = kartona;
 	}
 	
 	public Grid getGrid() {

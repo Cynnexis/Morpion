@@ -8,6 +8,7 @@ public enum EState {
 	INITIALIZING,
 	PLAYING,
 	PAUSING,
+	AIPLAYING,
 	P1WON,
 	P2WON,
 	DRAW

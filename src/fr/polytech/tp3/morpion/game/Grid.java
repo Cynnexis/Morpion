@@ -1,6 +1,10 @@
 package fr.polytech.tp3.morpion.game;
 
 import fr.polytech.tp3.morpion.game.matrix.Matrix;
+import fr.polytech.tp3.morpion.game.matrix.Point;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * A matrix adapted for the Tic Tac Toe game
@@ -62,6 +66,17 @@ public class Grid extends Matrix<ECell> {
 					full = false;
 		
 		return full;
+	}
+	
+	public ArrayList<Point> getAvailableCells() {
+		ArrayList<Point> points = new ArrayList<>(9);
+		
+		for (int i = 0; i < this.getNbColumns(); i++)
+			for (int j = 0; j < this.getNbColumns(); j++)
+				if (this.get(i, j) == ECell.EMPTY)
+					points.add(new Point(i, j));
+		
+		return points;
 	}
 	
 	/**

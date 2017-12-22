@@ -3,306 +3,42 @@
   <ID>JAVA</ID>
   <OriginalElement>fr.polytech.tp3.morpion</OriginalElement>
   <nodes>
-    <node x="1041.5727800782154" y="1197.5">fr.polytech.tp3.morpion.game.Grid</node>
-    <node x="124.57278007821537" y="579.0">fr.polytech.tp3.morpion.game.matrix.Matrix</node>
-    <node x="1639.6194559466298" y="251.0">fr.polytech.tp3.morpion.game.ECell</node>
-    <node x="1820.21875" y="1125.0">fr.polytech.tp3.morpion.game.Player</node>
-    <node x="696.0465392799632" y="0.0">fr.polytech.tp3.morpion.game.matrix.Couple</node>
-    <node x="409.5727800782154" y="699.5">fr.polytech.tp3.morpion.gui.ArrangedButton</node>
-    <node x="742.5727800782154" y="1258.5">fr.polytech.tp3.morpion.game.exceptions.CellFullException</node>
-    <node x="1254.5727800782154" y="724.5">fr.polytech.tp3.morpion.game.EState</node>
-    <node x="1576.5727800782154" y="2395.0">fr.polytech.tp3.morpion.console.GameConsole</node>
-    <node x="1729.93125" y="760.5">fr.polytech.tp3.morpion.game.PlayerListener</node>
-    <node x="1522.3227800782154" y="2802.0">fr.polytech.tp3.morpion.Morpion</node>
-    <node x="564.5727800782154" y="2143.0">fr.polytech.tp3.morpion.gui.Frame</node>
-    <node x="1320.5727800782154" y="1234.5">fr.polytech.tp3.morpion.game.GameListener</node>
-    <node x="0.0" y="312.5">fr.polytech.tp3.morpion.game.matrix.MatrixListener</node>
-    <node x="720.0465392799632" y="288.0">fr.polytech.tp3.morpion.game.matrix.Point</node>
-    <node x="1297.5866459627327" y="1567.0">fr.polytech.tp3.morpion.game.Game</node>
+    <node x="423.5" y="516.0">fr.polytech.tp3.morpion.game.Grid</node>
+    <node x="423.0" y="0.0">fr.polytech.tp3.morpion.game.matrix.Matrix</node>
+    <node x="802.0" y="798.0">fr.polytech.tp3.morpion.game.ECell</node>
+    <node x="0.0" y="798.0">fr.polytech.tp3.morpion.game.Player</node>
+    <node x="297.0" y="798.0">fr.polytech.tp3.morpion.gui.ArrangedButton</node>
+    <node x="1029.0" y="0.0">fr.polytech.tp3.morpion.game.matrix.Couple</node>
+    <node x="1011.0" y="1165.0">fr.polytech.tp3.morpion.game.exceptions.CellFullException</node>
+    <node x="1028.0" y="798.0">fr.polytech.tp3.morpion.console.GameConsole</node>
+    <node x="632.0" y="798.0">fr.polytech.tp3.morpion.game.EState</node>
+    <node x="369.0" y="1165.0">fr.polytech.tp3.morpion.game.PlayerListener</node>
+    <node x="0.0" y="1313.0">fr.polytech.tp3.morpion.Morpion</node>
+    <node x="0.0" y="0.0">fr.polytech.tp3.morpion.gui.Frame</node>
+    <node x="0.0" y="1165.0">fr.polytech.tp3.morpion.game.GameListener</node>
+    <node x="687.0" y="1165.0">fr.polytech.tp3.morpion.game.matrix.MatrixListener</node>
+    <node x="1053.0" y="251.0">fr.polytech.tp3.morpion.game.matrix.Point</node>
+    <node x="733.0" y="0.0">fr.polytech.tp3.morpion.game.Game</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="fr.polytech.tp3.morpion.game.exceptions.CellFullException" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="69.75" y="-27.5" />
-      <point x="951.8227800782154" y="1085.0" />
-      <point x="895.3680900621125" y="1085.0" />
-      <point x="895.3680900621125" y="519.0" />
-      <point x="1666.76945594663" y="519.0" />
-      <point x="-63.34999999999991" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.matrix.Matrix" target="fr.polytech.tp3.morpion.game.matrix.MatrixListener">
-      <point x="-33.125" y="-233.0" />
-      <point x="223.94778007821537" y="559.0" />
-      <point x="232.5" y="559.0" />
-      <point x="93.0" y="27.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.exceptions.CellFullException">
-      <point x="53.928571428571445" y="-304.5" />
-      <point x="769.5013515067868" y="2083.0" />
-      <point x="821.7609860248452" y="2083.0" />
-      <point x="821.7609860248452" y="1547.0" />
-      <point x="789.0727800782154" y="1547.0" />
-      <point x="-93.0" y="27.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.exceptions.CellFullException">
-      <point x="-79.55555555555543" y="-52.5" />
-      <point x="1586.51722452266" y="2083.0" />
-      <point x="841.0727800782154" y="2083.0" />
-      <point x="841.0727800782154" y="1547.0" />
-      <point x="882.0727800782154" y="1547.0" />
-      <point x="0.0" y="27.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.exceptions.CellFullException">
-      <point x="-105.9375" y="-233.0" />
-      <point x="1304.6491459627327" y="1537.0" />
-      <point x="975.0727800782154" y="1537.0" />
-      <point x="93.0" y="27.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.GameListener" target="fr.polytech.tp3.morpion.game.EState">
-      <point x="-81.0" y="-51.5" />
-      <point x="1401.5727800782154" y="1095.0" />
-      <point x="1342.0727800782154" y="1095.0" />
-      <point x="25.0" y="87.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.EState">
-      <point x="-21.1875" y="-233.0" />
-      <point x="1389.3991459627327" y="1477.0" />
-      <point x="1295.2609860248454" y="1477.0" />
-      <point x="1295.2609860248454" y="1095.0" />
-      <point x="1292.0727800782154" y="1095.0" />
-      <point x="-25.0" y="87.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.matrix.Matrix">
-      <point x="-118.64285714285711" y="-304.5" />
-      <point x="596.9299229353583" y="2113.0" />
-      <point x="183.69848602484524" y="2113.0" />
-      <point x="183.69848602484524" y="1105.0" />
-      <point x="157.69778007821537" y="1105.0" />
-      <point x="-99.375" y="233.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.EState">
-      <point x="10.785714285714334" y="-304.5" />
-      <point x="726.3584943639297" y="2123.0" />
-      <point x="721.0727800782154" y="2123.0" />
-      <point x="721.0727800782154" y="1095.0" />
-      <point x="1267.0727800782154" y="1095.0" />
-      <point x="-50.0" y="87.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.EState">
-      <point x="0.0" y="-52.5" />
-      <point x="1666.0727800782154" y="2083.0" />
-      <point x="1708.43125" y="2083.0" />
-      <point x="1708.43125" y="1085.0" />
-      <point x="1367.0727800782154" y="1085.0" />
-      <point x="50.0" y="87.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.GameListener">
-      <point x="7.0625" y="-233.0" />
-      <point x="-64.79999999999995" y="51.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.matrix.Point">
-      <point x="59.666666666666686" y="-52.5" />
-      <point x="1725.7394467448821" y="2113.0" />
-      <point x="2093.71875" y="2113.0" />
-      <point x="2093.71875" y="459.0" />
-      <point x="891.9965392799631" y="459.0" />
-      <point x="81.44999999999993" y="52.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.matrix.Point">
-      <point x="-35.3125" y="-233.0" />
-      <point x="1375.2741459627327" y="1487.0" />
-      <point x="1244.0727800782154" y="1487.0" />
-      <point x="1244.0727800782154" y="479.0" />
-      <point x="855.7965392799632" y="479.0" />
-      <point x="45.25" y="52.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.GameListener">
-      <point x="-19.888888888888914" y="-52.5" />
-      <point x="1646.1838911893265" y="2053.0" />
-      <point x="1611.5727800782156" y="2053.0" />
-      <point x="129.60000000000014" y="51.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.matrix.Matrix" target="fr.polytech.tp3.morpion.game.matrix.Point">
-      <point x="33.125" y="-233.0" />
-      <point x="290.1977800782154" y="459.0" />
-      <point x="729.0965392799632" y="459.0" />
-      <point x="-81.45000000000005" y="52.0" />
-    </edge>
     <edge source="fr.polytech.tp3.morpion.game.Grid" target="fr.polytech.tp3.morpion.game.matrix.Matrix">
-      <point x="-60.33333333333326" y="-88.5" />
-      <point x="1071.7394467448821" y="1075.0" />
-      <point x="290.1977800782154" y="1075.0" />
-      <point x="33.125" y="233.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="79.5555555555556" y="-52.5" />
-      <point x="1745.628335633771" y="2123.0" />
-      <point x="2138.0678959627326" y="2123.0" />
-      <point x="2138.0678959627326" y="449.0" />
-      <point x="1811.56945594663" y="449.0" />
-      <point x="81.45000000000005" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="49.4375" y="-233.0" />
-      <point x="1460.0241459627327" y="1497.0" />
-      <point x="1655.0727800782154" y="1497.0" />
-      <point x="1655.0727800782154" y="549.0" />
-      <point x="1721.06945594663" y="549.0" />
-      <point x="-9.049999999999955" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.Game">
-      <point x="118.64285714285711" y="-304.5" />
-      <point x="834.2156372210725" y="2113.0" />
-      <point x="1382.3366459627327" y="2113.0" />
-      <point x="-28.25" y="233.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.ArrangedButton" target="fr.polytech.tp3.morpion.game.matrix.Point">
-      <point x="96.66666666666663" y="-112.5" />
-      <point x="651.239446744882" y="499.0" />
-      <point x="801.4965392799633" y="499.0" />
-      <point x="-9.049999999999955" y="52.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.Player">
-      <point x="140.21428571428578" y="-304.5" />
-      <point x="855.7870657925012" y="2123.0" />
-      <point x="1600.5727800782156" y="2123.0" />
-      <point x="1600.5727800782156" y="1547.0" />
-      <point x="1996.61875" y="1547.0" />
-      <point x="50.40000000000009" y="161.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Player" target="fr.polytech.tp3.morpion.game.PlayerListener">
-      <point x="0.0" y="-161.0" />
-      <point x="1946.21875" y="1105.0" />
-      <point x="1968.80625" y="1105.0" />
-      <point x="102.375" y="51.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.GameListener">
-      <point x="75.5" y="-304.5" />
-      <point x="791.0727800782154" y="2093.0" />
-      <point x="1273.3040300782154" y="2093.0" />
-      <point x="1273.3040300782154" y="1547.0" />
-      <point x="1352.9727800782155" y="1547.0" />
-      <point x="-129.5999999999999" y="51.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Grid" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="60.33333333333326" y="-88.5" />
-      <point x="1192.4061134115486" y="1085.0" />
-      <point x="1150.7847567287793" y="1085.0" />
-      <point x="1150.7847567287793" y="529.0" />
-      <point x="1684.8694559466298" y="529.0" />
-      <point x="-45.25" y="89.0" />
+      <point x="0.0" y="-100.5" />
+      <point x="0.0" y="233.0" />
     </edge>
     <edge source="fr.polytech.tp3.morpion.game.matrix.Point" target="fr.polytech.tp3.morpion.game.matrix.Couple">
-      <point x="45.25" y="-52.0" />
-      <point x="855.7965392799632" y="226.0" />
-      <point x="867.7965392799632" y="226.0" />
-      <point x="57.25" y="100.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.Grid">
-      <point x="-91.8125" y="-233.0" />
-      <point x="1318.7741459627327" y="1527.0" />
-      <point x="1071.7394467448821" y="1527.0" />
-      <point x="-60.33333333333326" y="88.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.gui.ArrangedButton">
-      <point x="-53.928571428571445" y="-304.5" />
-      <point x="661.6442086496439" y="2083.0" />
-      <point x="554.5727800782154" y="2083.0" />
-      <point x="0.0" y="112.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Player" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="50.40000000000009" y="-161.0" />
-      <point x="1996.61875" y="1105.0" />
-      <point x="2013.43125" y="1105.0" />
-      <point x="2013.43125" y="549.0" />
-      <point x="1775.3694559466298" y="549.0" />
-      <point x="45.25" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.GameListener" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="81.0" y="-51.5" />
-      <point x="1563.5727800782154" y="539.0" />
-      <point x="1702.9694559466298" y="539.0" />
-      <point x="-27.15000000000009" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.exceptions.CellFullException" target="fr.polytech.tp3.morpion.game.matrix.Point">
-      <point x="-69.75" y="-27.5" />
-      <point x="812.3227800782154" y="1085.0" />
-      <point x="884.3680900621125" y="1085.0" />
-      <point x="884.3680900621125" y="499.0" />
-      <point x="819.5965392799632" y="499.0" />
-      <point x="9.049999999999955" y="52.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="-10.78571428571422" y="-304.5" />
-      <point x="704.7870657925012" y="2123.0" />
-      <point x="710.0727800782154" y="2123.0" />
-      <point x="710.0727800782154" y="509.0" />
-      <point x="1648.6694559466298" y="509.0" />
-      <point x="-81.45000000000005" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.Game">
-      <point x="-59.66666666666674" y="-52.5" />
-      <point x="1606.4061134115486" y="2073.0" />
-      <point x="1438.8366459627327" y="2073.0" />
-      <point x="28.25" y="233.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.matrix.MatrixListener">
-      <point x="-140.21428571428578" y="-304.5" />
-      <point x="575.3584943639296" y="2123.0" />
-      <point x="71.36028007821551" y="2123.0" />
-      <point x="71.36028007821551" y="559.0" />
-      <point x="46.5" y="559.0" />
-      <point x="-93.0" y="27.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.Morpion" target="fr.polytech.tp3.morpion.console.GameConsole">
-      <point x="66.0" y="-27.5" />
-      <point x="1687.3227800782154" y="2777.0" />
-      <point x="1710.8227800782154" y="2777.0" />
-      <point x="44.75" y="52.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.PlayerListener" target="fr.polytech.tp3.morpion.game.ECell">
-      <point x="0.0" y="-51.5" />
-      <point x="1866.43125" y="559.0" />
-      <point x="1757.26945594663" y="559.0" />
-      <point x="27.15000000000009" y="89.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.console.GameConsole" target="fr.polytech.tp3.morpion.game.Player">
-      <point x="19.888888888888914" y="-52.5" />
-      <point x="1685.9616689671043" y="2093.0" />
-      <point x="2010.0868400621125" y="2093.0" />
-      <point x="2010.0868400621125" y="1547.0" />
-      <point x="2047.01875" y="1547.0" />
-      <point x="100.79999999999995" y="161.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.game.Game" target="fr.polytech.tp3.morpion.game.Player">
-      <point x="105.9375" y="-233.0" />
-      <point x="1516.5241459627327" y="1537.0" />
-      <point x="1946.21875" y="1537.0" />
-      <point x="0.0" y="161.0" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.Morpion" target="fr.polytech.tp3.morpion.gui.Frame">
-      <point x="-66.0" y="-27.5" />
-      <point x="1555.3227800782154" y="2777.0" />
-      <point x="715.5727800782154" y="2777.0" />
-      <point x="0.0" y="304.5" />
-    </edge>
-    <edge source="fr.polytech.tp3.morpion.gui.Frame" target="fr.polytech.tp3.morpion.game.PlayerListener">
-      <point x="32.35714285714289" y="-304.5" />
-      <point x="747.9299229353583" y="2123.0" />
-      <point x="732.0727800782154" y="2123.0" />
-      <point x="732.0727800782154" y="1105.0" />
-      <point x="1764.05625" y="1105.0" />
-      <point x="-102.375" y="51.5" />
+      <point x="0.0" y="-52.0" />
+      <point x="0.0" y="100.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="829.333333333333" y="1040.6666666666665" />
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="829.333333333333" y="1020.6666666666665" />
   <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
-    <Category>Constructors</Category>
-    <Category>Methods</Category>
-    <Category>Properties</Category>
     <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
   </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>
