@@ -36,7 +36,7 @@ public class Game {
 	/**
 	 * The kartona instance
 	 */
-	private Kartona kartona = new Kartona(Intelligence.HARD);
+	private Kartona kartona = new Kartona(Intelligence.MINIMAX);
 	/**
 	 * The Tic Tac Toe grid
 	 */
@@ -210,7 +210,23 @@ public class Game {
 	 * this method).
 	 * @throws NotImplementedException Throw an exception if the grid is not a 3-by-3 grid
 	 */
-	private ECell checkWin() throws NotImplementedException {
+	public ECell checkWin() throws NotImplementedException {
+		return checkWin(getGrid());
+	}
+	/**
+	 * <p>
+	 * Check if one of the two players won. To do so, the method checks the pattern of each token in the grid
+	 * </p>
+	 * <p>
+	 * The method cannot check a m*n grid. See https://en.wikipedia.org/wiki/M,n,k-game
+	 * </p>
+	 * @param grid The current grid to check
+	 * @return Return `CROSS` if the player associated to the cross won, `CIRCLE` if the player associated to the circle
+	 * won, or `EMPTY` if nothing happen (it can be a draw, so it is advise to check if the grid is full after calling
+	 * this method).
+	 * @throws NotImplementedException Throw an exception if the grid is not a 3-by-3 grid
+	 */
+	public static ECell checkWin(@NotNull Grid grid) throws NotImplementedException {
 		if (grid.getNbColumns() != 3 || grid.getNbRows() != 3)
 			throw new NotImplementedException();
 		
@@ -222,14 +238,14 @@ public class Game {
 		{
 			// 8 cases to check:
 			if (tok != ECell.EMPTY && (
-				(grid.get(0, 0) == tok && grid.get(1, 1) == tok && grid.get(2, 2) == tok) || // Diagonal \
-				(grid.get(2, 0) == tok && grid.get(1, 1) == tok && grid.get(0, 2) == tok) || // Diagonal /
-				(grid.get(0, 0) == tok && grid.get(1, 0) == tok && grid.get(2, 0) == tok) || // Top row
-				(grid.get(0, 1) == tok && grid.get(1, 1) == tok && grid.get(2, 1) == tok) || // Middle row
-				(grid.get(0, 2) == tok && grid.get(1, 2) == tok && grid.get(2, 2) == tok) || // Bottom row
-				(grid.get(0, 0) == tok && grid.get(0, 1) == tok && grid.get(0, 2) == tok) || // Right column
-				(grid.get(1, 0) == tok && grid.get(1, 1) == tok && grid.get(1, 2) == tok) || // Center column
-				(grid.get(2, 0) == tok && grid.get(2, 1) == tok && grid.get(2, 2) == tok))) {
+					(grid.get(0, 0) == tok && grid.get(1, 1) == tok && grid.get(2, 2) == tok) || // Diagonal \
+							(grid.get(2, 0) == tok && grid.get(1, 1) == tok && grid.get(0, 2) == tok) || // Diagonal /
+							(grid.get(0, 0) == tok && grid.get(1, 0) == tok && grid.get(2, 0) == tok) || // Top row
+							(grid.get(0, 1) == tok && grid.get(1, 1) == tok && grid.get(2, 1) == tok) || // Middle row
+							(grid.get(0, 2) == tok && grid.get(1, 2) == tok && grid.get(2, 2) == tok) || // Bottom row
+							(grid.get(0, 0) == tok && grid.get(0, 1) == tok && grid.get(0, 2) == tok) || // Right column
+							(grid.get(1, 0) == tok && grid.get(1, 1) == tok && grid.get(1, 2) == tok) || // Center column
+							(grid.get(2, 0) == tok && grid.get(2, 1) == tok && grid.get(2, 2) == tok))) {
 				winner = tok;
 				break;
 			}

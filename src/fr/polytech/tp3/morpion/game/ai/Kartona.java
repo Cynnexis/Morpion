@@ -1,8 +1,12 @@
 package fr.polytech.tp3.morpion.game.ai;
 
 import com.sun.javafx.scene.web.Debugger;
+import fr.berger.enhancedlist.Couple;
+import fr.berger.enhancedlist.exceptions.InfiniteLoopException;
+import fr.berger.enhancedlist.tree.Node;
 import fr.polytech.tp3.morpion.game.ECell;
 import fr.polytech.tp3.morpion.game.Grid;
+import fr.polytech.tp3.morpion.game.ai.minimax.TicTacToeMinimax;
 import fr.polytech.tp3.morpion.game.exceptions.GridFullException;
 import fr.polytech.tp3.morpion.game.exceptions.PointNotInDiagonal;
 import fr.polytech.tp3.morpion.game.matrix.Point;
@@ -100,6 +104,18 @@ public class Kartona {
 							coordinates = situations.get(situations.size() - 1).getPoint();
 					}
 				}
+				break;
+			case MINIMAX:
+				TicTacToeMinimax minimax = new TicTacToeMinimax();
+				Node<Grid> root = minimax.constructNode(currentGrid, ECell.CIRCLE, 10);
+				
+				Couple<Integer, Node<Grid>> result;
+				try {
+					result = minimax.minimax(root);
+				} catch (InfiniteLoopException e) {
+					e.printStackTrace();
+				}
+				
 				break;
 		}
 		

@@ -1,5 +1,7 @@
 package fr.polytech.tp3.morpion.game;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import fr.polytech.tp3.morpion.game.matrix.Matrix;
 import fr.polytech.tp3.morpion.game.matrix.Point;
 
@@ -28,6 +30,23 @@ public class Grid extends Matrix<ECell> {
 	 */
 	public Grid() {
 		super(3, 3, ECell.EMPTY);
+	}
+	
+	/**
+	 * Construct grid by copy
+	 */
+	public Grid(@NotNull Grid grid) {
+		super(3, 3, ECell.EMPTY);
+		
+		if (grid == null)
+			throw new NullPointerException();
+		
+		setNbColumns(grid.getNbColumns());
+		setNbRows(grid.getNbRows());
+		
+		for (int i = 0; i < getNbColumns(); i++)
+			for (int j = 0; j < getNbRows(); j++)
+				set(i, j, grid.get(i, j) != null ? grid.get(i, j) : ECell.EMPTY);
 	}
 	
 	/**
@@ -68,12 +87,23 @@ public class Grid extends Matrix<ECell> {
 		return full;
 	}
 	
-	public ArrayList<Point> getAvailableCells() {
+	public @NotNull ArrayList<Point> getAvailableCells() {
 		ArrayList<Point> points = new ArrayList<>(9);
 		
 		for (int i = 0; i < this.getNbColumns(); i++)
 			for (int j = 0; j < this.getNbColumns(); j++)
 				if (this.get(i, j) == ECell.EMPTY)
+					points.add(new Point(i, j));
+		
+		return points;
+	}
+	
+	public @NotNull ArrayList<Point> getAll(@Nullable ECell type) {
+		ArrayList<Point> points = new ArrayList<>(9);
+		
+		for (int i = 0; i < this.getNbColumns(); i++)
+			for (int j = 0; j < this.getNbColumns(); j++)
+				if (this.get(i, j) == type)
 					points.add(new Point(i, j));
 		
 		return points;

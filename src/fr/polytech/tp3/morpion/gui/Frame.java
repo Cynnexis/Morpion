@@ -47,6 +47,7 @@ public class Frame extends JFrame {
 	private ButtonGroup bg_kartonaDifficulty = new ButtonGroup();
 	private JRadioButtonMenuItem mi_kartonaEasy = new JRadioButtonMenuItem("Easy");
 	private JRadioButtonMenuItem mi_kartonaHard = new JRadioButtonMenuItem("Hard");
+	private JRadioButtonMenuItem mi_kartonaMinimax = new JRadioButtonMenuItem("Minimax");
 	private JMenuItem mi_exit = new JMenuItem("Exit");
 	
 	private JSplitPane sp_main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -208,16 +209,23 @@ public class Frame extends JFrame {
 				game.getKartona().setIntelligence(Intelligence.HARD);
 		});
 		
+		mi_kartonaMinimax.addActionListener((ActionEvent e) -> {
+			if (game != null)
+				game.getKartona().setIntelligence(Intelligence.MINIMAX);
+		});
+		
 		mi_exit.addActionListener((ActionEvent e) -> {
 			Frame.this.dispose();
 		});
 		
 		bg_kartonaDifficulty.add(mi_kartonaEasy);
 		bg_kartonaDifficulty.add(mi_kartonaHard);
-		mi_kartonaHard.setSelected(true);
+		bg_kartonaDifficulty.add(mi_kartonaMinimax);
+		mi_kartonaMinimax.setSelected(true);
 		
 		m_kartonaDifficulty.add(mi_kartonaEasy);
 		m_kartonaDifficulty.add(mi_kartonaHard);
+		m_kartonaDifficulty.add(mi_kartonaMinimax);
 		
 		m_file.add(mi_newGame);
 		m_file.add(mi_playAgainstKartona);
