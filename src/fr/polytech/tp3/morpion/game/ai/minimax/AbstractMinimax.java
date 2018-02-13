@@ -20,12 +20,10 @@ public abstract class AbstractMinimax<T> implements Serializable, Computable<T> 
 	public static final int MINUS_INFINITY = Integer.MIN_VALUE;
 	
 	public Couple<Integer, Node<T>> minimax(@Nullable Tree<T> root) throws InfiniteLoopException {
-		InfiniteLoopException ex = new InfiniteLoopException();
-		return minimax(root, root.computeHeight(), true, ex);
+		return minimax(root, root.computeHeight(), true, null);
 	}
 	public Couple<Integer, Node<T>> minimax(@Nullable Node<T> root) throws InfiniteLoopException {
-		InfiniteLoopException ex = new InfiniteLoopException();
-		return minimax(root, root.computeHeight(), true, ex);
+		return minimax(root, root.computeHeight(), true, null);
 	}
 	public Couple<Integer, Node<T>> minimax(@NotNull Node<T> node, int depth, boolean isMax) throws InfiniteLoopException {
 		return minimax(node, depth, isMax, null);
@@ -34,8 +32,11 @@ public abstract class AbstractMinimax<T> implements Serializable, Computable<T> 
 		if (node == null)
 			throw new NullPointerException();
 		
+		if (ex == null)
+			ex = new InfiniteLoopException(200000L);
+		
 		if (depth == 0 || node.isLeaf())
-			// Return the heurisitc value of 'node'
+			// Return the heuristic value of 'node'
 			return new Couple<>(compute(node.getData()), node);
 		
 		int bestValue = 0;

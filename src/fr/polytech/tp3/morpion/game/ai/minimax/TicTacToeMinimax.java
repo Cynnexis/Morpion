@@ -15,7 +15,7 @@ public class TicTacToeMinimax extends AbstractMinimax<Grid> {
 	public @NotNull
 	Node<Grid> constructNode(@NotNull Grid grid, @NotNull ECell token, int depth) {
 		// Add one to depth because thr root is 'null'
-		return constructNode(new Node<>(), grid, token, ++depth);
+		return constructNode(new Node<>(grid), grid, token, ++depth);
 	}
 	public @NotNull Node<Grid> constructNode(@NotNull Node<Grid> node, @NotNull Grid grid,
 	                                         @NotNull ECell token, int depth) {
@@ -30,14 +30,16 @@ public class TicTacToeMinimax extends AbstractMinimax<Grid> {
 		
 		ArrayList<Point> available = grid.getAvailableCells();
 		
-		for (Point p : available) {
-			Grid copy = new Grid(grid);
-			
-			copy.set(p, token);
-			
-			Node<Grid> child = new Node<>(copy);
-			if (depth > 1)
-				node.addChild(constructNode(child, copy, token == ECell.CROSS ? ECell.CIRCLE : ECell.CROSS, depth - 1));
+		if (available.size() > 0) {
+			for (Point p : available) {
+				Grid copy = new Grid(grid);
+				
+				copy.set(p, token);
+				
+				Node<Grid> child = new Node<>(copy);
+				if (depth > 1)
+					node.addChild(constructNode(child, copy, token == ECell.CROSS ? ECell.CIRCLE : ECell.CROSS, depth - 1));
+			}
 		}
 		
 		return node;

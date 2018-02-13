@@ -43,22 +43,6 @@ public class Kartona {
 		
 		switch (intelligence)
 		{
-			case EASY:
-				Random rand = new Random();
-				boolean empty = true;
-				int iterations = 0;
-				int limit = 1000; // 1000 iterations max
-				
-				do {
-					coordinates.setX((int) (rand.nextInt((2 - 0) + 1) + 0));
-					coordinates.setY((int) (rand.nextInt((2 - 0) + 1) + 0));
-					empty = currentGrid.get(coordinates) == ECell.EMPTY;
-					iterations++;
-				} while (!empty && iterations <= limit);
-				
-				if (iterations >= limit)
-					throw new GridFullException();
-				break;
 			case HARD:
 				ArrayList<Point> available = currentGrid.getAvailableCells();
 				ArrayList<Situation> situations = new ArrayList<>(4 * available.size());
@@ -109,13 +93,50 @@ public class Kartona {
 				TicTacToeMinimax minimax = new TicTacToeMinimax();
 				Node<Grid> root = minimax.constructNode(currentGrid, ECell.CIRCLE, 10);
 				
-				Couple<Integer, Node<Grid>> result;
+				// TODO: Ro resolve the bug which generate 100'000 nodes, uses Node<T>.getAllNodesAtDepth(int) to debug
+				
+				Couple<Integer, Node<Grid>> result = null;
 				try {
 					result = minimax.minimax(root);
 				} catch (InfiniteLoopException e) {
 					e.printStackTrace();
 				}
 				
+				if (result != null && result.getY() != null) {
+					Node<Grid> next = result.getY();
+					
+					while (next.getParent() != null && next.getParent().getData() != null)
+						next = next.getParent();
+					
+					// Get the move from "next"
+					Point move = null;
+					for (int i = 0; i < next.getData().getNbColumns() && move == null; i++) {
+						for (int j = 0; j < next.getData().getNbRows() && move == null; j++) {
+							if (currentGrid.get(i, j) != next.getData().get(i, j))
+								move = new Point(i, j);
+						}
+					}
+					
+					coordinates = move;
+					
+					break;
+				}
+				// Else, go to "EASY" mode
+			case EASY:
+				Random rand = new Random();
+				boolean empty = true;
+				int iterations = 0;
+				int limit = 1000; // 1000 iterations max
+				
+				do {
+					coordinates.setX((int) (rand.nextInt((2 - 0) + 1) + 0));
+					coordinates.setY((int) (rand.nextInt((2 - 0) + 1) + 0));
+					empty = currentGrid.get(coordinates) == ECell.EMPTY;
+					iterations++;
+				} while (!empty && iterations <= limit);
+				
+				if (iterations >= limit)
+					throw new GridFullException();
 				break;
 		}
 		
